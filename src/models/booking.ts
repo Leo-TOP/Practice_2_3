@@ -12,7 +12,6 @@ export interface NewBooking { name: string; seats: number }
 export function initialBookings(): Booking[] {
   return [
     { id: 'b1', name: 'Анна', seats: 1, status: 'confirmed', source: 'web' },
-    // Шаг 2 · SOURCE: временно замените «Иван» на «Иван с сервера», затем верните.
     { id: 'b2', name: 'Иван', seats: 1, status: 'new', source: 'web' },
   ]
 }

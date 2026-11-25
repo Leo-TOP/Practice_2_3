@@ -12,10 +12,10 @@ export async function readBookings(): Promise<Booking[]> {
     await writeBookings(rows)
     return rows
   }
-  // Шаг 7 · FILE-READ: замените заглушку разбором text и проверкой isBookingArray.
-  // START FILE-READ
-  throw new Error('Шаг 7: завершите чтение JSON-файла.')
-  // END FILE-READ
+
+  const parsed: unknown = JSON.parse(text)
+  if (!isBookingArray(parsed)) throw new Error('Файл содержит неверный список заявок.')
+  return parsed
 }
 
 export async function writeBookings(rows: Booking[]): Promise<void> {
@@ -31,10 +31,7 @@ export async function writeBookings(rows: Booking[]): Promise<void> {
 
   const temporary = dataFile + '.tmp'
   try {
-    // Шаг 7 · FILE-WRITE: запишите JSON в temporary, дождавшись результата.
-    // START FILE-WRITE
-    throw new Error('Шаг 7: завершите запись JSON-файла.')
-    // END FILE-WRITE
+    await writeFile(temporary, JSON.stringify(rows, null, 2) + '\n', 'utf8')
     // Готово: рабочий файл заменяется только после успешной записи временного.
     await rename(temporary, dataFile)
   } finally {
